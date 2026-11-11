@@ -103,7 +103,7 @@ function resetForm() {
           @submit.prevent="handleSave"
         >
           <SettingsSection
-            title="Profile"
+            title="sukiBot"
             description="How V identifies you across web, Slack, and iMessage."
           >
             <SettingsRow
