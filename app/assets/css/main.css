@@ -1,79 +1,94 @@
-@import "tailwindcss";
-@import "@nuxt/ui";
-
-@theme {
-  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", ui-monospace, monospace;
+#suki-walker {
+    position: fixed;
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    left: calc(20px + env(safe-area-inset-left, 0px));
+    width: 100px;
+    height: 100px;
+    z-index: 9999;
+    cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    animation: suki-bob 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(189, 0, 255, 0.7));
+    will-change: transform;
+    transition: transform 0.15s ease;
 }
 
-:root {
-  --ui-primary: black;
-  --ui-container: var(--container-3xl);
-  --ui-radius: 0.15rem;
-  overscroll-behavior-y: none;
+#suki-walker:active {
+    transform: scale(0.92);
 }
 
-.dark {
-  --ui-primary: white;
+#suki-walker img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 2px solid #bd00ff;
+    object-fit: cover;
+    pointer-events: none;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
+/* Optimized Bobbing Animation */
+@keyframes suki-bob {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-8px) rotate(2deg); 
+    }
 }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: oklch(25% 0 0 / 0.5) transparent;
+/* Speech Bubble for Suki's Quips */
+#suki-speech {
+    position: fixed;
+    bottom: calc(130px + env(safe-area-inset-bottom, 0px));
+    left: calc(20px + env(safe-area-inset-left, 0px));
+    background: rgba(15, 5, 25, 0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid #bd00ff;
+    color: #f3e7ff;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    line-height: 1.4;
+    max-width: 180px;
+    overflow-wrap: break-word;
+    z-index: 10000;
+    box-shadow: 0 0 14px rgba(189, 0, 255, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
 }
 
-*::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+#suki-speech.active {
+    opacity: 1;
+    visibility: visible;
+}
+/* Base Avatar Container */
+.sukibot-avatar {
+  --eye-aperture: 1;         /* 1 = normal, 0.4 = narrowed/focused, 1.2 = wide */
+  --brow-tilt: 0deg;         /* Neutral eyebrow angle */
+  --smirk-lift: 0px;         /* Mouth corner offset */
+  --glow-intensity: 0.8;     /* Cyberpunk HUD / hair accent glow */
 }
 
-*::-webkit-scrollbar-track {
-  background: transparent;
+/* Dynamic State Overrides */
+.sukibot-avatar[data-state="thinking"] {
+  --eye-aperture: 0.65;
+  --brow-tilt: -4deg;
+  --glow-intensity: 1.2;
 }
 
-*::-webkit-scrollbar-thumb {
-  background: oklch(25% 0 0 / 0.5);
-  border-radius: 3px;
+.sukibot-avatar[data-state="speaking"] {
+  --smirk-lift: 3px;
+  --eye-aperture: 0.95;
 }
 
-*::-webkit-scrollbar-thumb:hover {
-  background: oklch(35% 0 0 / 0.6);
-}
-
-.dark {
-  --ui-bg: oklch(14.5% 0 0);
-  --ui-bg-muted: oklch(17.5% 0 0);
-  --ui-bg-elevated: oklch(20.5% 0 0);
-  --ui-bg-accented: oklch(26.9% 0 0);
-  --ui-border: oklch(26.9% 0 0);
-  --ui-border-muted: oklch(23% 0 0);
-  --ui-border-accented: oklch(30% 0 0);
-}
-
-@layer base {
-  body {
-    @apply antialiased;
-  }
-}
-
-.hero-glow {
-  background:
-    radial-gradient(
-      ellipse 90% 60% at 50% -15%,
-      color-mix(in oklab, var(--ui-text-toned) 14%, transparent),
-      transparent 72%
-    );
-}
-
-html.dark .shiki span {
-  color: var(--shiki-dark) !important;
-  background-color: var(--shiki-dark-bg) !important;
-  font-style: var(--shiki-dark-font-style) !important;
-  font-weight: var(--shiki-dark-font-weight) !important;
-  text-decoration: var(--shiki-dark-text-decoration) !important;
+.sukibot-avatar[data-state="playful"] {
+  --eye-aperture: 0.8;
+  --brow-tilt: 6deg;
+  --smirk-lift: 5px;
 }
