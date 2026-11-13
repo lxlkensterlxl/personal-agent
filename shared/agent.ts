@@ -1,11 +1,11 @@
 // Customize agent branding here (name, slug, tagline, avatar).
 export const agent = {
-  name: "V",
+  name: "sukiBot",
   slug: "v",
-  tagline: "What do you need?",
+  tagline: "sukiBot your cute anime assistant",
   description:
     "Remembers your context across conversations and channels.",
   avatar: {
-    icon: "i-lucide-bot",
+    icon: "suki-avatar.png",
   },
 } as const;
